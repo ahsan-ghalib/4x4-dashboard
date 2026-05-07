@@ -255,7 +255,7 @@ const Products = () => {
 
   // Phase 6: Handle Export (CSV, JSON, Template)
   const handleExport = async (exportType) => {
-    if (!data?.products || data.products.length === 0) {
+    if (exportType !== "template" && (!data?.products || data.products.length === 0)) {
       toast.error(t("No products to export"));
       return;
     }
@@ -264,52 +264,51 @@ const Products = () => {
       setLoadingExport({ type: exportType, status: true });
 
       if (exportType === "template") {
-       // Download CSV Template
-const templateData = [
-  {
-    "Product Id": "unique-product-id",
-    "Product Title Name": "Sample Product",
-    "Product Description": "Full product description goes here",
-    "Product Excerpt": "Short excerpt of product",
-    "Product Short Summary": "Brief summary of product",
-    "Product Image": "image1.jpg",
-    "Product SKU": "SKU001",
-    "Product Barcode": "1234567890",
-    "Category": "Category Name",
-    "Default Category": "Default Category Name",
-    "Wholesale Price": "80.00",
-    "RRP": "100.00",
-    "Quick Discount Type": "Percentage",
-    "Quick Discount": "10",
-    "Product Quantity": "10",
-    "Product Slug": "sample-product",
-    "Product Weight": "1.5",
-    "Product Length": "10",
-    "Product Width": "5",
-    "Product Height": "3",
-    "Product Tag": "tag1|tag2|tag3",
-    "Brand": "Brand Name",
-    "Brand Image": "brand.jpg",
-    "Manufacturer SKU": "MFG001",
-    "Internal SKU": "INT001",
-    "Additional Product Details": "Extra details about product",
-    "Last Batch Ordered From Manufacturer": "2026-01-01",
-    "Last Batch Order Quantity": "100",
-    "Last Batch Order Reference": "REF123",
-    "Stock Arrival Date": "2026-01-10",
-    "Vehicle Make": "Toyota",
-    "Vehicle Model": "Corolla",
-    "Flat Rate for Drop Shipping": "15.00",
-    "Ship Out Location": "Warehouse A",
-    "Direct Supplier Link": "https://supplier-link.com",
-    "Product Meta Title": "SEO Title Here",
-    "Meta Product Description": "SEO description here",
-    "Product Meta Keywords": "keyword1, keyword2",
-    "Vendor Name": "Vendor ABC",
-    "Vendor Postal Code": "4400"
-  }
-];
-
+       // Download CSV Template with only column headers
+       const templateData = [
+         {
+           "Product Id": "",
+           "Product Title Name": "",
+           "Product Description": "",
+           "Product Excerpt": "",
+           "Product Short Summary": "",
+           "Product Image": "",
+           "Product SKU": "",
+           "Product Barcode": "",
+           "Category": "",
+           "Default Category": "",
+           "Wholesale Price": "",
+           "RRP": "",
+           "Quick Discount Type": "",
+           "Quick Discount": "",
+           "Product Quantity": "",
+           "Product Slug": "",
+           "Product Weight": "",
+           "Product Length": "",
+           "Product Width": "",
+           "Product Height": "",
+           "Product Tag": "",
+           "Brand": "",
+           "Brand Image": "",
+           "Manufacturer SKU": "",
+           "Internal SKU": "",
+           "Additional Product Details": "",
+           "Last Batch Ordered From Manufacturer": "",
+           "Last Batch Order Quantity": "",
+           "Last Batch Order Reference": "",
+           "Stock Arrival Date": "",
+           "Vehicle Make": "",
+           "Vehicle Model": "",
+           "Flat Rate for Drop Shipping": "",
+           "Ship Out Location": "",
+           "Direct Supplier Link": "",
+           "Product Meta Title": "",
+           "Meta Product Description": "",
+           "Product Meta Keywords": "",
+           "Vendor Name": "",
+           "Vendor Postal Code": ""
+         }
+       ];
         exportFromJSON({
           data: templateData,
           fileName: "product-import-template",
@@ -574,7 +573,7 @@ const templateData = [
                         e.target.value = ""; // Reset to default
                       }
                     }}
-                    disabled={loadingExport.status || !data?.products || data?.products.length === 0}
+                    disabled={loadingExport.status}
                     defaultValue=""
                     className="w-full min-h-[48px] px-4 pr-10 text-sm border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 disabled:opacity-50 disabled:cursor-not-allowed appearance-none cursor-pointer"
                     style={{
@@ -590,12 +589,16 @@ const templateData = [
                         ? `${t("Exporting")}...`
                         : t("Export")}
                     </option>
-                    <option value="csv">
-                      {t("Export to CSV")}
-                    </option>
-                    <option value="json">
-                      {t("Export to JSON")}
-                    </option>
+                    {data?.products && data?.products.length > 0 && (
+                      <>
+                        <option value="csv">
+                          {t("Export to CSV")}
+                        </option>
+                        <option value="json">
+                          {t("Export to JSON")}
+                        </option>
+                      </>
+                    )}
                     <option value="template">
                       {t("Download CSV Template")}
                     </option>
