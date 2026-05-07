@@ -197,6 +197,7 @@ const useProductSubmit = (id) => {
           // ...descriptionTranslates,
         }),
         excerpt: data.excerpt,
+        shortSummary: data.shortSummary || "",
         height: data.height,
         width: data.width,
         length: data["length"] || 0,

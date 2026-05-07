@@ -264,24 +264,51 @@ const Products = () => {
       setLoadingExport({ type: exportType, status: true });
 
       if (exportType === "template") {
-        // Download CSV Template
-        const templateData = [
-          {
-            "ID": "unique-product-id",
-            "Name": "Sample Product",
-            "Description": "Product description goes here",
-            "SKU": "SKU001",
-            "Weight": "1.5",
-            "Brand": "Brand",
-            "Tags": "tag1|tag2|tag3",
-            "Images": "image1.jpg|image2.jpg",
-            "Price": "100.00",
-            "Status": "Published",
-            "Stock": "10",
-            "Featured": "Yes",
-            "Date Modified": new Date().toISOString().split('T')[0]
-          }
-        ];
+       // Download CSV Template
+const templateData = [
+  {
+    "Product Id": "unique-product-id",
+    "Product Title Name": "Sample Product",
+    "Product Description": "Full product description goes here",
+    "Product Excerpt": "Short excerpt of product",
+    "Product Short Summary": "Brief summary of product",
+    "Product Image": "image1.jpg",
+    "Product SKU": "SKU001",
+    "Product Barcode": "1234567890",
+    "Category": "Category Name",
+    "Default Category": "Default Category Name",
+    "Wholesale Price": "80.00",
+    "RRP": "100.00",
+    "Quick Discount Type": "Percentage",
+    "Quick Discount": "10",
+    "Product Quantity": "10",
+    "Product Slug": "sample-product",
+    "Product Weight": "1.5",
+    "Product Length": "10",
+    "Product Width": "5",
+    "Product Height": "3",
+    "Product Tag": "tag1|tag2|tag3",
+    "Brand": "Brand Name",
+    "Brand Image": "brand.jpg",
+    "Manufacturer SKU": "MFG001",
+    "Internal SKU": "INT001",
+    "Additional Product Details": "Extra details about product",
+    "Last Batch Ordered From Manufacturer": "2026-01-01",
+    "Last Batch Order Quantity": "100",
+    "Last Batch Order Reference": "REF123",
+    "Stock Arrival Date": "2026-01-10",
+    "Vehicle Make": "Toyota",
+    "Vehicle Model": "Corolla",
+    "Flat Rate for Drop Shipping": "15.00",
+    "Ship Out Location": "Warehouse A",
+    "Direct Supplier Link": "https://supplier-link.com",
+    "Product Meta Title": "SEO Title Here",
+    "Meta Product Description": "SEO description here",
+    "Product Meta Keywords": "keyword1, keyword2",
+    "Vendor Name": "Vendor ABC",
+    "Vendor Postal Code": "4400"
+  }
+];
 
         exportFromJSON({
           data: templateData,

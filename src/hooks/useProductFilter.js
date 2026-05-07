@@ -35,6 +35,9 @@ const schema = {
     excerpt: {
       type: "string",
     },
+    shortSummary: {
+      type: "string",
+    },
     weight: {
       type: "string",
     },
@@ -298,6 +301,7 @@ const useProductFilter = () => {
                 category: value.category ,
                 stock: value.stock,
                 description: value.description,
+                shortSummary: value.shortSummary || "",
                 brand: value.brand ? {
                   ...value.brand,
                   image: processedBrandImage.length > 0 ? processedBrandImage[0] : ""
@@ -363,7 +367,7 @@ const useProductFilter = () => {
           }
 
           // Validate brand images
-          const productsWithoutBrandImage = json.filter(item => item?.Brand && !item?.["Brand Image"] && !item?.brandImage);
+          const productsWithoutBrandImage = json.filter(item => item?.Brand && !item?.["Brand Image"] && !item?.brandImage && !item?.["brand image"] && !item?.["Brand image"]);
           if (productsWithoutBrandImage.length > 0) {
             notifyError(`❌ Brand image is missing for ${productsWithoutBrandImage.length} product(s). Please add "Brand Image" column to your CSV and try again.`);
             setIsDisable(false);
@@ -431,6 +435,7 @@ const useProductFilter = () => {
               title: {
                 en: value?.["Product Title Name"] || value?.title || value?.Name || value?.name || "",
               },
+              shortSummary: value?.["Product Short Summary"] || value?.shortSummary || value?.["Product Short summary"] || value?.["Product short summary"] || value?.["product short summary"] ||"",
               description: {
                 en: value?.["Product Description"] || value?.description || value?.Description || "",
               },
