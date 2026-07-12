@@ -51,6 +51,7 @@ const OrderInvoice = () => {
     currency,
     globalSetting
   });
+  const shipments = data?.shipments || (data?.shipment ? [data.shipment] : []);
   return (
     <>
       <PageTitle> {t("InvoicePageTittle")} </PageTitle>
@@ -199,6 +200,46 @@ const OrderInvoice = () => {
                   {getNumberTwo(data.order.total)}
                 </span>
               </div>
+            </div>
+          </div>
+        )}
+
+        {!loading && shipments.length > 0 && (
+          <div className="mt-6 border rounded-xl border-gray-100 p-6 bg-white dark:bg-gray-900 dark:border-gray-800">
+            <h2 className="font-bold font-serif text-sm uppercase text-gray-600 dark:text-gray-400 mb-4">
+              Shipments
+            </h2>
+            <div className="grid gap-3">
+              {shipments.map((shipment) => (
+                <div
+                  key={shipment._id}
+                  className="border border-gray-100 dark:border-gray-800 rounded-lg p-4 text-sm text-gray-600 dark:text-gray-300"
+                >
+                  <div className="grid grid-cols-1 md:grid-cols-4 gap-3">
+                    <div>
+                      <span className="block text-xs uppercase text-gray-400">Carrier</span>
+                      <span className="font-semibold">{shipment.carrier || data.order.shippingMethod || "-"}</span>
+                    </div>
+                    <div>
+                      <span className="block text-xs uppercase text-gray-400">Status</span>
+                      <span className="font-semibold">{shipment.status || shipment.carrierStatus || "-"}</span>
+                    </div>
+                    <div>
+                      <span className="block text-xs uppercase text-gray-400">Tracking</span>
+                      <span className="font-semibold">{shipment.trackingNumber || "-"}</span>
+                    </div>
+                    <div>
+                      <span className="block text-xs uppercase text-gray-400">Consignment</span>
+                      <span className="font-semibold">{shipment.consignmentNumber || "-"}</span>
+                    </div>
+                  </div>
+                  {shipment.carrierErrors?.length > 0 && (
+                    <div className="mt-3 text-xs text-red-500">
+                      {shipment.carrierErrors.map((error) => error.message || error.code).join(", ")}
+                    </div>
+                  )}
+                </div>
+              ))}
             </div>
           </div>
         )}
